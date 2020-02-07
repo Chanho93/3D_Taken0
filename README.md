@@ -2,9 +2,54 @@
  
 중세시대 배경의 Taken
 
-1. 시작화면
+1. 시작화면 및 캐릭터 이동
 
 ![image](https://user-images.githubusercontent.com/48191157/71571785-682d4800-2b1f-11ea-8fa7-b6a7896377bb.png)
+
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Player_Ani.SetBool("Attack", true);
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            Player_Ani.SetBool("Attack", false);
+        }
+        if (Input.GetKeyDown("space")) {
+            Player_Body.GetComponent<CapsuleCollider>().enabled = false;
+            Hammer.GetComponent<BoxCollider>().enabled = false;
+            Player_Ani.SetBool("Guard", true);
+        }
+        if (Input.GetKeyUp("space"))
+        {
+            Player_Body.GetComponent<CapsuleCollider>().enabled = true;
+            Hammer.GetComponent<BoxCollider>().enabled = true;
+            Player_Ani.SetBool("Guard", false);
+        }
+
+        float distance_per_frame = FootMan_speed * Time.deltaTime;
+        float degrees_per_frame = rot_speed * Time.deltaTime;
+
+        float moving_velocity = Input.GetAxis("Vertical");
+        float FootMan_angle = Input.GetAxis("Horizontal");        
+
+        if(-1 <= moving_velocity && moving_velocity <0 )
+        {
+            Player_Ani.SetBool("Run", true);
+        }
+        else if(0 < moving_velocity && moving_velocity <= 1)
+        {
+            Player_Ani.SetBool("Run", true);
+        }
+        else
+        {
+            Player_Ani.SetBool("Run", false);
+        }
+
+        this.transform.Translate(Vector3.forward * moving_velocity * distance_per_frame);
+        this.transform.Rotate(0.0f, FootMan_angle * degrees_per_frame, 0.0f);
+    }
 
 2. 성 밖의 AI적군의 공격
 
