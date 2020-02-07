@@ -68,6 +68,21 @@
 
 ![image](https://user-images.githubusercontent.com/48191157/71571795-79765480-2b1f-11ea-9db5-d721067189c3.png)
 
+    void Update()
+    {
+        this.transform.LookAt(target);
+        timeAfterSpawn += Time.deltaTime;
+
+        if (timeAfterSpawn >= spawnRate)
+        {
+            timeAfterSpawn = 0f;
+            GameObject spawn_point = GameObject.Find("sp_bullet1");
+            GameObject bullet = Instantiate(bulletPrefab, spawn_point.transform.position, spawn_point.transform.rotation);
+            bullet.transform.LookAt(target);
+            spawnRate = Random.Range(spawnRateMin, spawnRateMax);
+        }
+    }
+
 4. 성 안의 AI적군의 공격
 
 ![image](https://user-images.githubusercontent.com/48191157/71571800-8004cc00-2b1f-11ea-8b37-8de1a1a2aae1.png)
